@@ -1,22 +1,22 @@
 var mongoose = require('mongoose');
 
 var schema = mongoose.Schema({
-	dados1: {
+  userId: {
 		type: String,
 		required: false
 	},
-	dados2: {
+	question: {
 		type: String,
 		required: false
 	},
-	dados3: {
+	answer: {
 		type: String,
 		required: false
 	},
-	dados4: {
-		type: String,
+  questionType: {
+    type: Number,
 		required: false
-	} 
+  }
 });
 
-mongoose.model('Data', schema);
+mongoose.model('Collect', schema);

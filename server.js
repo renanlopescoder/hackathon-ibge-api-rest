@@ -5,6 +5,6 @@ require('./config/database');
 var port =  process.env.PORT || 3000;
 
 app.listen(port, function(){
-	console.log('Servidor Iniciado, Alfred Online');
+	console.log('Server Online, Alfred is up =)');
 }); 
 

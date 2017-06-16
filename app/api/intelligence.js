@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var api = {};
 
-var model = mongoose.model('Data');
+var model = mongoose.model('User');
+var collect = mongoose.model('Collect');
 
 api.lista = function (req, res){
 	model.find({},function(error, lista){
@@ -15,13 +16,19 @@ api.lista = function (req, res){
 
 api.create = function(req, res){
 	model
-		.create(req.body).then(function(dados){
-		res.json(dados);
+		.create(req.body).then(function(data){
+			var response = {
+				userId: data._id,
+				question: "Olá, sou o Alfred como você se chama?",
+				questionId: 1,
+				format: "text",
+				delay: 500,
+			}
+		res.json(response);
 	}, function(error){
 		console.log(error);
 		res.status(404).json(error);
 	});
-
 };
 
 api.buscaPorId = function(req,res){

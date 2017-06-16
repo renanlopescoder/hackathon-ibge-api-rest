@@ -10,7 +10,6 @@ var cors = require('cors');
 app.use(cors({origin: '*'}));
 
 	app.set('secret', 'opensecret');
-	app.use(express.static('./public'));
 
 	load('app/models')
 	.then('app/api')
