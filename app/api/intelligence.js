@@ -42,7 +42,7 @@ var questionsList =
 			delay: 500
 		},
 		{
-			comment: "Muito prazer em te conhecer caro tiago, vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			comment: "Muito prazer em te conhecer, vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
 			question: "Qual ano você fez o enem pela última vez?",
 			answerFormat: "number",
 			questionId: 1,
@@ -89,8 +89,14 @@ var questionsList =
 			answerFormat: "text",
 			questionId: 7,
 			delay: 250
+		},
+		{
+			comment: "Me desculpe, após muita busca não consigo achar nada que te atenda",
+			question: "Muito Obrigado...",
+			answerFormat: "text",
+			questionId: 8,
+			delay: 250
 		}
-
 
 
 	];
@@ -167,6 +173,10 @@ function generateResponse(questionId, reply, id, callback) {
 
 	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 5) {
 		nextQuestion = 6;
+		callback(questionsList[nextQuestion]);
+	}
+	else {
+		nextQuestion = 8;
 		callback(questionsList[nextQuestion]);
 	}
 };
