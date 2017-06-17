@@ -178,17 +178,16 @@ api.startChat = function (req, res) {
 };
 
 api.reply = function (req, res) {
-	createCollections();
-	let collectReply =
-		{
-			userId: req.body.userId,
-			questionId: req.body.questionId,
-			question: questionsList[req.body.questionId],
-			reply: req.body.reply
-		};
-
+	
 	collect
-		.create(collectReply).then(function (data) {
+		.create(
+			{
+				userId: req.body.userId,
+				questionId: req.body.questionId,
+				question: questionsList[req.body.questionId],
+				reply: req.body.reply
+			}
+		).then(function (data) {
 			generateResponse(req.body.questionId, req.body.reply, function(data){
 				return res.json(data);
 			})
