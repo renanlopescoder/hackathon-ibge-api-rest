@@ -155,7 +155,7 @@ api.startChat = function (req, res) {
 			delay: 250
 		}
 	];
-	
+
 	model
 		.create(req.body).then(function (data) {
 			let response = {
@@ -179,7 +179,7 @@ api.reply = function (req, res) {
 		.create(		{
 			userId: req.body.userId,
 			questionId: req.body.questionId,
-			question: questionsList[req.body.questionId],
+			question: req.body.question,
 			reply: req.body.reply
 		}).then(function (data) {
 			generateResponse(req.body.questionId, req.body.reply, function(data){
