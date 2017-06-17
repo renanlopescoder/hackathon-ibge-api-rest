@@ -6,7 +6,7 @@ var schema = mongoose.Schema({
 		required: false
 	},
   question: {
-    type: String,
+    type: Object,
     required: false
   },
 	reply: {

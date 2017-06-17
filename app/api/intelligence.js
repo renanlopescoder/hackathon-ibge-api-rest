@@ -4,7 +4,7 @@ var api = {};
 var model = mongoose.model('User');
 var collect = mongoose.model('Collect');
 
-var questionsArray =
+var questionsList =
 	[
 		{
 			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
@@ -29,97 +29,129 @@ var questionsArray =
 		},
 		{
 			comment: "", 
-			question: "",
+			question: "Sabia que no [estado] está com alta na demanda para sua profissão? só que lá faz [clima], falando nisso qual sua cidade?",
 			answerFormat: "text",
-			questionId: 2,
+			questionId: 3,
 			delay: 250
-		}
+		},
+		{
+			comment: "Legal cidade bonita, tenho ouvido falar que [cidade] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!", 
+			question: "Qual sua nota no enem?",
+			answerFormat: "text",
+			questionId: 4,
+			delay: 250
+		},
+		{
+			comment: "Legal, vamos ver, olha só que sorte achei [tres] faculdades x, y e z", 
+			question: "Esro ter ajudado, muito obrigado!",
+			answerFormat: "text",
+			questionId: 5,
+			delay: 250
+		},
 	];
 
 function generateResponse(questionId, reply) {
 	let response = {}
-
+	console.log(questionId + "   "+ reply);
 	switch (1) {
 
 // CASE 0
 
-		case reply.indexOf("engenharia") !== -1 && questionsArray[questionId].questionId == 2 :
-			response = {
-				alfred: "Muito bom, no Rio Grande do Sul tem alta demanda nessa área",
-				
-			}
+		case questionsList[questionId].questionId == 0 :
+			response = questionsList[questionId + 1];
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 0:
+		case reply.indexOf("2016") !== -1 && questionsList[questionId].questionId == 1 :
+			response = questionsList[questionId + 2]
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 0:
+		case reply.indexOf("engenharia") !== -1 && questionsList[questionId].questionId == 2 :
+			response = questionsList[questionId + 3]
+			break
+
+		case reply.indexOf("brasilia") !== -1 && questionsList[questionId].questionId == 3 :
+			response = questionsList[questionId + 4]
+			break
+
+		case reply.indexOf("800") !== -1 && questionsList[questionId].questionId == 4:
+			response = questionsList[questionId + 5]
+			break		
+
+
+
+
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 0:
+			response = questionsList[questionId + 1]
+			break
+
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 0:
+			response = questionsList[questionId + 1]
 			break
 
 // CASE 1
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 1:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 1:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 1:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 1:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 1:
 			break
 
 // CASE 2
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 2:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 2:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 2:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
 			break
 
 // CASE 3
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 3:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 3:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 3:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
 			break
 
 // CASE 4
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 4:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 4:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 4:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
 			break
 
 // CASE 5
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 5:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 5:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 5:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
 			break
 
 // CASE 6
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 6:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 6:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
 			break
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 6:
+		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
 			break
 
 	};
@@ -131,10 +163,10 @@ api.startChat = function (req, res) {
 		.create(req.body).then(function (data) {
 			let response = {
 				userId: data._id,
-				comment: questionsArray[0].comment,
-				question: questionsArray[0].question,
+				comment: questionsList[0].comment,
+				question: questionsList[0].question,
 				questionId: 0,
-				answerFormat: questionsArray[0].answerFormat,
+				answerFormat: questionsList[0].answerFormat,
 				delay: 500,
 			}
 			res.json(response);
@@ -150,16 +182,15 @@ api.reply = function (req, res) {
 		{
 			userId: req.body.userId,
 			questionId: req.body.questionId,
-			question: questionsArray[req.body.questionId].question,
+			question: questionsList[req.body.questionId],
 			reply: req.body.reply
 		};
-
+		console.log(req.body)
+		var responseTheReply = generateResponse(req.body.questionId, req.body.reply);
+		
 	collect
 		.create(collectReply).then(function (data) {
-
-			
-
-			res.json(generateResponse(req.body.questionId, req.body.reply));
+			res.json(responseTheReply);
 		}, function (error) {
 			console.log(error);
 			res.status(404).json(error);
