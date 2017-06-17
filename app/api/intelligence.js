@@ -120,6 +120,11 @@ function generateResponse(questionId, reply, callback) {
 		callback(questionsList[nextQuestion])
 	}
 
+	else if (reply < 2000 && questionsList[questionId].questionId == 7) {
+		nextQuestion = 2;
+		callback(questionsList[nextQuestion])
+	}
+
 	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2) {
 		nextQuestion = 3;
 		arrayResult = questionsList[nextQuestion].question.split("[course]");
