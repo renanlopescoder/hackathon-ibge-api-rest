@@ -128,7 +128,7 @@ function generateResponse(questionId, reply, id, callback) {
 		// });
 	}
 
-	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
+	else if ((reply < 2017 && reply > 2000) && questionsList[questionId].questionId == 1) {
 		nextQuestion = 2;
 		callback(questionsList[nextQuestion])
 	}
