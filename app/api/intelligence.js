@@ -95,7 +95,7 @@ function getQuestionList () {
 
 
 function generateResponse(questionId, reply, callback) {
-	let arrayResult = getQuestionList ();
+	let questionList = getQuestionList ();
 	let nextQuestion = 0;
 
 	if (questionsList[questionId].questionId == 0) {
@@ -157,9 +157,10 @@ function generateResponse(questionId, reply, callback) {
 };
 
 api.startChat = function (req, res) {
+	let questionsList = getQuestionList();
 	model
 		.create(req.body).then(function (data) {
-
+			
 			res.json({
 				userId: data._id,
 				comment: questionsList[0].comment,
@@ -175,7 +176,7 @@ api.startChat = function (req, res) {
 };
 
 api.reply = function (req, res) {
-	
+	let questionsList = getQuestionList();
 	collect
 		.create(
 			{
