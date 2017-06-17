@@ -32,8 +32,8 @@ function createCollections() {
 	});
 }
 
-function getQuestionList () {
-	return 	[
+var questionsList =
+	[
 		{
 			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
 			question: "opa, antes de tudo, como posso te chamar?",
@@ -90,12 +90,15 @@ function getQuestionList () {
 			questionId: 7,
 			delay: 250
 		}
-	];
-}
 
+
+
+
+
+	];
 
 function generateResponse(questionId, reply, callback) {
-	let questionList = getQuestionList ();
+	let response = {};
 	let nextQuestion = 0;
 
 	if (questionsList[questionId].questionId == 0) {
@@ -157,18 +160,17 @@ function generateResponse(questionId, reply, callback) {
 };
 
 api.startChat = function (req, res) {
-	let questionsList = getQuestionList();
 	model
 		.create(req.body).then(function (data) {
-			
-			res.json({
+			let response = {
 				userId: data._id,
 				comment: questionsList[0].comment,
 				question: questionsList[0].question,
 				questionId: 0,
 				answerFormat: questionsList[0].answerFormat,
 				delay: 500,
-			});
+			}
+			res.json(response);
 		}, function (error) {
 			console.log(error);
 			res.status(404).json(error);
@@ -176,18 +178,16 @@ api.startChat = function (req, res) {
 };
 
 api.reply = function (req, res) {
-	let questionsList = getQuestionList();
+	
 	collect
-		.create(
-			{
-				userId: req.body.userId,
-				questionId: req.body.questionId,
-				question: questionsList[req.body.questionId],
-				reply: req.body.reply
-			}
-		).then(function (data) {
-			generateResponse(data.questionId, data.reply, function(dataCallback){
-				return res.json(dataCallback);
+		.create(		{
+			userId: req.body.userId,
+			questionId: req.body.questionId,
+			question: questionsList[req.body.questionId],
+			reply: req.body.reply
+		}).then(function (data) {
+			generateResponse(req.body.questionId, req.body.reply, function(data){
+				return res.json(data);
 			})
 		}, function (error) {
 			console.log(error);
