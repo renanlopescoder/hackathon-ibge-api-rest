@@ -32,70 +32,7 @@ function createCollections() {
 	});
 }
 
-var questionsList =
-	[
-		{
-			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
-			question: "opa, antes de tudo, como posso te chamar?",
-			answerFormat: "text",
-			questionId: 0,
-			delay: 500
-		},
-		{
-			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
-			question: "Qual ano você fez o enem pela última vez?",
-			answerFormat: "number",
-			questionId: 1,
-			delay: 500
-		},
-		{
-			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!",
-			question: "Ano passado eu queria fazer análise de robô, esse ano já não quero mais e você qual curso gostaria de fazer?",
-			answerFormat: "text",
-			questionId: 2,
-			delay: 250
-		},
-		{
-			comment: "",
-			question: "Sabia que no RS está com alta na demanda em [course]? falando nisso qual sua cidade?",
-			answerFormat: "text",
-			questionId: 3,
-			delay: 250
-		},
-		{
-			comment: "Legal cidade bonita, tenho ouvido falar que [city] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!",
-			question: "Qual sua nota no enem?",
-			answerFormat: "text",
-			questionId: 4,
-			delay: 250
-		},
-		{
-			comment: "Legal cidade bonita, tenho ouvido falar que [city] não possui uma boa qualidade de vida!",
-			question: "Qual sua nota no enem?",
-			answerFormat: "text",
-			questionId: 5,
-			delay: 250
-		},
-		{
-			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
-			question: "Espero ter ajudado, muito obrigado!",
-			answerFormat: "text",
-			questionId: 6,
-			delay: 250
-		},
-		{
-			comment: "Hahahaha, parece que faz muito tempo em!",
-			question: "Qual ano você fez o enem pela última vez?",
-			answerFormat: "text",
-			questionId: 7,
-			delay: 250
-		}
-
-
-
-
-
-	];
+var questionsList = [];
 
 function generateResponse(questionId, reply, callback) {
 	let response = {};
@@ -160,6 +97,65 @@ function generateResponse(questionId, reply, callback) {
 };
 
 api.startChat = function (req, res) {
+	questionsList = [
+		{
+			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
+			question: "opa, antes de tudo, como posso te chamar?",
+			answerFormat: "text",
+			questionId: 0,
+			delay: 500
+		},
+		{
+			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			question: "Qual ano você fez o enem pela última vez?",
+			answerFormat: "number",
+			questionId: 1,
+			delay: 500
+		},
+		{
+			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!",
+			question: "Ano passado eu queria fazer análise de robô, esse ano já não quero mais e você qual curso gostaria de fazer?",
+			answerFormat: "text",
+			questionId: 2,
+			delay: 250
+		},
+		{
+			comment: "",
+			question: "Sabia que no RS está com alta na demanda em [course]? falando nisso qual sua cidade?",
+			answerFormat: "text",
+			questionId: 3,
+			delay: 250
+		},
+		{
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!",
+			question: "Qual sua nota no enem?",
+			answerFormat: "text",
+			questionId: 4,
+			delay: 250
+		},
+		{
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] não possui uma boa qualidade de vida!",
+			question: "Qual sua nota no enem?",
+			answerFormat: "text",
+			questionId: 5,
+			delay: 250
+		},
+		{
+			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
+			question: "Espero ter ajudado, muito obrigado!",
+			answerFormat: "text",
+			questionId: 6,
+			delay: 250
+		},
+		{
+			comment: "Hahahaha, parece que faz muito tempo em!",
+			question: "Qual ano você fez o enem pela última vez?",
+			answerFormat: "text",
+			questionId: 7,
+			delay: 250
+		}
+	];
+	
 	model
 		.create(req.body).then(function (data) {
 			let response = {
