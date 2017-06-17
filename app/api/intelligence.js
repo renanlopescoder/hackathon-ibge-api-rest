@@ -93,21 +93,32 @@ var questionsList =
 
 
 
-
-
 	];
 
-function generateResponse(questionId, reply, callback) {
+	function register (id, callback){
+		model
+			.findByIdAndUpdate(id)
+			.then(function (dado) {
+
+				callback(dado);
+
+			}, function (error) {
+				console.log(error);
+				res.status(404).json(error);
+			});
+	}
+
+function generateResponse(questionId, reply, id, callback) {
 	let response = {};
 	let nextQuestion = 0;
 
 	if (questionsList[questionId].questionId == 0) {
 		nextQuestion = 1;
-
-		arrayResult = questionsList[nextQuestion].comment.split("[name]");
-		questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
-
-		callback(questionsList[nextQuestion])
+		register(id, function(data){
+			arrayResult = questionsList[nextQuestion].comment.split("[name]");
+			questionsList[nextQuestion].comment = arrayResult[0] + data.name + arrayResult[1];
+			callback(questionsList[nextQuestion])
+		});
 	}
 
 	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
@@ -189,7 +200,7 @@ api.reply = function (req, res) {
 
 	collect
 		.create(collectReply).then(function (data) {
-			generateResponse(req.body.questionId, req.body.reply, function(data){
+			generateResponse(req.body.questionId, req.body.reply, req.body.userId, function(data){
 				return res.json(data);
 			})
 		}, function (error) {
