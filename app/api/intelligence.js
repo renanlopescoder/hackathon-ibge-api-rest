@@ -14,35 +14,35 @@ var questionsList =
 			delay: 250
 		},
 		{
-			comment: "Muito prazer em te conhecer caro [var], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
 			question: "Quando você fez o enem pela última vez?",
 			answerFormat: "number",
 			questionId: 1,
 			delay: 250
 		},
 		{
-			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!", 
+			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!",
 			question: "Ano passado eu queria fazer análise de robô, esse ano já não quero mais e você qual curso gostaria de fazer?",
 			answerFormat: "text",
 			questionId: 2,
 			delay: 250
 		},
 		{
-			comment: "", 
-			question: "Sabia que no [estado] está com alta na demanda para sua profissão? só que lá faz [clima], falando nisso qual sua cidade?",
+			comment: "",
+			question: "Sabia que no RS está com alta na demanda em [course]? falando nisso qual sua cidade?",
 			answerFormat: "text",
 			questionId: 3,
 			delay: 250
 		},
 		{
-			comment: "Legal cidade bonita, tenho ouvido falar que [cidade] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!", 
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!",
 			question: "Qual sua nota no enem?",
 			answerFormat: "text",
 			questionId: 4,
 			delay: 250
 		},
 		{
-			comment: "Legal, vamos ver, olha só que sorte achei [tres] faculdades x, y e z", 
+			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
 			question: "Espero ter ajudado, muito obrigado!",
 			answerFormat: "text",
 			questionId: 5,
@@ -52,17 +52,29 @@ var questionsList =
 
 function generateResponse(questionId, reply) {
 	let response = {}
-	
-		if (questionsList[questionId].questionId == 0) 
-			response = questionsList[questionId + 1];
-		else if (reply.includes("2016") && questionsList[questionId].questionId == 1)
-			response = questionsList[questionId + 1]
-		else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2)
-			response = questionsList[questionId + 1]
-		else if (reply.includes("brasilia") && questionsList[questionId].questionId == 3)
-			response = questionsList[questionId + 1]
-		else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 4)
-			response = questionsList[questionId + 1]
+
+	if (questionsList[questionId].questionId == 0) {
+		arrayResult = questionsList[questionId + 1].comment.split("[name]");
+		questionsList[questionId + 1].comment = arrayResult[0] + reply + arrayResult[1];
+		return questionsList[questionId + 1];
+	}
+
+	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
+		return questionsList[questionId + 1];
+	}
+	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2){
+		arrayResult = questionsList[questionId + 1].question.split("[course]");
+		questionsList[questionId + 1].question = arrayResult[0] + reply + arrayResult[1];
+		return questionsList[questionId + 1];
+	}
+	else if (reply.includes("brasilia") && questionsList[questionId].questionId == 3){
+		arrayResult = questionsList[questionId + 1].comment.split("[city]");
+		questionsList[questionId + 1].comment = arrayResult[0] + reply + arrayResult[1];
+		return questionsList[questionId + 1];
+	}
+	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 4){
+		return questionsList[questionId + 1];
+	}
 
 	return response
 };
@@ -94,26 +106,23 @@ api.reply = function (req, res) {
 			question: questionsList[req.body.questionId],
 			reply: req.body.reply
 		};
-		console.log(req.body)
-		var responseTheReply = generateResponse(req.body.questionId, req.body.reply);
-		
+
 	collect
 		.create(collectReply).then(function (data) {
-			res.json(responseTheReply);
+			res.json(generateResponse(req.body.questionId, req.body.reply));
 		}, function (error) {
 			console.log(error);
 			res.status(404).json(error);
 		});
 };
 
-api.lista = function (req, res) {
-	model.find({}, function (error, lista) {
+api.getCollectedData = function (req, res) {
+	collect.find({}, function (error, data) {
 		if (error) {
 			res.status(500).json(error);
 		}
-		res.json(lista);
+		res.json(data);
 	});
-
 };
 
 api.buscaPorId = function (req, res) {

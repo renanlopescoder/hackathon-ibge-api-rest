@@ -4,9 +4,5 @@ module.exports = function (app){
 
 	app.post('/startChat', api.startChat);
 	app.post('/reply', api.reply);
-
-	// app.get('/list/mvpData', api.lista);
-	// app.post('/update/mvpData/:id', api.update);
-	// app.get('/select/mvpData/:id', api.buscaPorId);
-	// app.delete('/delete/mvpData/:id', api.removePorId);
+	app.get('/collectedData', api.getCollectedData);
 };
