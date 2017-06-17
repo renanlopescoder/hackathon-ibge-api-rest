@@ -83,6 +83,18 @@ var questionsList =
 			questionId: 6,
 			delay: 250
 		},
+		{
+			comment: "Hahahaha, parece que faz muito tempo em!",
+			question: "Qual ano você fez o enem pela última vez?",
+			answerFormat: "text",
+			questionId: 7,
+			delay: 250
+		}
+
+
+
+
+
 	];
 
 function generateResponse(questionId, reply, callback) {
@@ -100,6 +112,11 @@ function generateResponse(questionId, reply, callback) {
 
 	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
 		nextQuestion = 2;
+		callback(questionsList[nextQuestion])
+	}
+
+	else if (reply < 2000 && questionsList[questionId].questionId == 1) {
+		nextQuestion = 7;
 		callback(questionsList[nextQuestion])
 	}
 
