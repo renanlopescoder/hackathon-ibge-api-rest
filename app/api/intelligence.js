@@ -95,18 +95,18 @@ var questionsList =
 
 	];
 
-	function register (id, callback){
-		model
-			.findByIdAndUpdate(id)
-			.then(function (dado) {
+	// function register (id, callback){
+	// 	model
+	// 		.findByIdAndUpdate(id)
+	// 		.then(function (dado) {
 
-				callback(dado);
+	// 			callback(dado);
 
-			}, function (error) {
-				console.log(error);
-				res.status(404).json(error);
-			});
-	}
+	// 		}, function (error) {
+	// 			console.log(error);
+	// 			res.status(404).json(error);
+	// 		});
+	// }
 
 function generateResponse(questionId, reply, id, callback) {
 	console.log(id);
@@ -115,11 +115,11 @@ function generateResponse(questionId, reply, id, callback) {
 
 	if (questionsList[questionId].questionId == 0) {
 		nextQuestion = 1;
-		register(id, function(data){
+		// register(id, function(data){
 			// arrayResult = questionsList[nextQuestion].comment.split("[name]");
 			// questionsList[nextQuestion].comment = arrayResult[0] + data.name + arrayResult[1];
 			callback(questionsList[nextQuestion])
-		});
+		// });
 	}
 
 	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
