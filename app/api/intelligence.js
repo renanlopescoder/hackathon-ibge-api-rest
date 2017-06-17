@@ -32,8 +32,8 @@ function createCollections() {
 	});
 }
 
-let questionsList =
-	[
+function getQuestionList () {
+	return 	[
 		{
 			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
 			question: "opa, antes de tudo, como posso te chamar?",
@@ -91,9 +91,11 @@ let questionsList =
 			delay: 250
 		}
 	];
+}
+
 
 function generateResponse(questionId, reply, callback) {
-	let arrayResult = {};
+	let arrayResult = getQuestionList ();
 	let nextQuestion = 0;
 
 	if (questionsList[questionId].questionId == 0) {
