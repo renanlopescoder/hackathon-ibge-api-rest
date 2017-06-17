@@ -121,7 +121,7 @@ function generateResponse(questionId, reply, callback) {
 	}
 
 	else if (reply < 2000 && questionsList[questionId].questionId == 7) {
-		nextQuestion = 2;
+		nextQuestion = 1;
 		callback(questionsList[nextQuestion])
 	}
 
