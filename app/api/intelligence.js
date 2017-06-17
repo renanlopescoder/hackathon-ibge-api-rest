@@ -43,7 +43,7 @@ var questionsList =
 		},
 		{
 			comment: "Legal, vamos ver, olha só que sorte achei [tres] faculdades x, y e z", 
-			question: "Esro ter ajudado, muito obrigado!",
+			question: "Espero ter ajudado, muito obrigado!",
 			answerFormat: "text",
 			questionId: 5,
 			delay: 250
@@ -52,109 +52,18 @@ var questionsList =
 
 function generateResponse(questionId, reply) {
 	let response = {}
-	console.log(questionId + "   "+ reply);
-	switch (1) {
-
-// CASE 0
-
-		case questionsList[questionId].questionId == 0 :
+	
+		if (questionsList[questionId].questionId == 0) 
 			response = questionsList[questionId + 1];
-			break
-
-		case reply.indexOf("2016") !== -1 && questionsList[questionId].questionId == 1 :
-			response = questionsList[questionId + 2]
-			break
-
-		case reply.indexOf("engenharia") !== -1 && questionsList[questionId].questionId == 2 :
-			response = questionsList[questionId + 3]
-			break
-
-		case reply.indexOf("brasilia") !== -1 && questionsList[questionId].questionId == 3 :
-			response = questionsList[questionId + 4]
-			break
-
-		case reply.indexOf("800") !== -1 && questionsList[questionId].questionId == 4:
-			response = questionsList[questionId + 5]
-			break		
-
-
-
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 0:
+		else if (reply.includes("2016") && questionsList[questionId].questionId == 1)
 			response = questionsList[questionId + 1]
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 0:
+		else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2)
 			response = questionsList[questionId + 1]
-			break
+		else if (reply.includes("brasilia") && questionsList[questionId].questionId == 3)
+			response = questionsList[questionId + 1]
+		else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 4)
+			response = questionsList[questionId + 1]
 
-// CASE 1
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 1:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 1:
-			break
-
-// CASE 2
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 2:
-			break
-
-// CASE 3
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 3:
-			break
-
-// CASE 4
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 4:
-			break
-
-// CASE 5
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 5:
-			break
-
-// CASE 6
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
-			break
-
-		case reply.indexOf("") !== -1 && questionsList[questionId].questionId == 6:
-			break
-
-	};
 	return response
 };
 
