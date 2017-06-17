@@ -7,43 +7,43 @@ var collect = mongoose.model('Collect');
 var questionsArray =
 	[
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar", "opa, antes de tudo, como posso te chamar?"],
 			answerFormat: "text",
 			questionId: 0,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
-			answerFormat: "text",
+			question: ["Muito prazer em te conhecer caro [var], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?", "Quando você fez o enem pela última vez?"],
+			answerFormat: "number",
 			questionId: 1,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre "],
 			answerFormat: "text",
 			questionId: 2,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Olá, sou o Alfred como você se chama?"],
 			answerFormat: "text",
 			questionId: 3,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Olá, sou o Alfred como você se chama?"],
 			answerFormat: "text",
 			questionId: 4,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Olá, sou o Alfred como você se chama?"],
 			answerFormat: "text",
 			questionId: 5,
 			delay: 500
 		},
 		{
-			question: "Olá, sou o Alfred como você se chama?",
+			question: ["Olá, sou o Alfred como você se chama?"],
 			answerFormat: "text",
 			questionId: 6,
 			delay: 500
