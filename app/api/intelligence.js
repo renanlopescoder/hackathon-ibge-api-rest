@@ -39,14 +39,14 @@ var questionsList =
 			question: "opa, antes de tudo, como posso te chamar?",
 			answerFormat: "text",
 			questionId: 0,
-			delay: 250
+			delay: 500
 		},
 		{
 			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
-			question: "Quando você fez o enem pela última vez?",
+			question: "Qual ano você fez o enem pela última vez?",
 			answerFormat: "number",
 			questionId: 1,
-			delay: 250
+			delay: 500
 		},
 		{
 			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!",
