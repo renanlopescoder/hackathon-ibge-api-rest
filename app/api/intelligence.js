@@ -90,49 +90,44 @@ var questionsList =
 			questionId: 7,
 			delay: 250
 		}
-
-
-
-
-
 	];
 
 function generateResponse(questionId, reply, callback) {
-	let response = {};
+	let list = JSON.parse(JSON.stringify(questionList))
 	let nextQuestion = 0;
 
-	if (questionsList[questionId].questionId == 0) {
+	if (list[questionId].questionId == 0) {
 		nextQuestion = 1;
 
-		arrayResult = questionsList[nextQuestion].comment.split("[name]");
-		questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+		arrayResult = list[nextQuestion].comment.split("[name]");
+		list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 
-		callback(questionsList[nextQuestion])
+		callback(list[nextQuestion])
 	}
 
-	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
+	else if (reply.includes("2016") && list[questionId].questionId == 1) {
 		nextQuestion = 2;
-		callback(questionsList[nextQuestion])
+		callback(list[nextQuestion])
 	}
 
-	else if (reply < 2000 && questionsList[questionId].questionId == 1) {
+	else if (reply < 2000 && list[questionId].questionId == 1) {
 		nextQuestion = 7;
-		callback(questionsList[nextQuestion])
+		callback(list[nextQuestion])
 	}
 
-	else if (reply < 2000 && questionsList[questionId].questionId == 7) {
+	else if (reply < 2000 && list[questionId].questionId == 7) {
 		nextQuestion = 1;
-		callback(questionsList[nextQuestion])
+		callback(list[nextQuestion])
 	}
 
-	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2) {
+	else if (reply.includes("engenharia") && list[questionId].questionId == 2) {
 		nextQuestion = 3;
-		arrayResult = questionsList[nextQuestion].question.split("[course]");
-		questionsList[nextQuestion].question = arrayResult[0] + reply + arrayResult[1];
-		callback(questionsList[nextQuestion])
+		arrayResult = list[nextQuestion].question.split("[course]");
+		list[nextQuestion].question = arrayResult[0] + reply + arrayResult[1];
+		callback(list[nextQuestion])
 	}
 
-	else if (questionsList[questionId].questionId == 3) {
+	else if (list[questionId].questionId == 3) {
 		
 		lifeQuality.findOne({city: reply}, function (error, data) {
 			if (error) {
@@ -141,36 +136,36 @@ function generateResponse(questionId, reply, callback) {
 			
 			else if (parseInt(data.rank) >= 5) {
 				nextQuestion = 5;
-				arrayResult = questionsList[nextQuestion].comment.split("[city]");
-				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+				arrayResult = list[nextQuestion].comment.split("[city]");
+				list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 			}
 			else if (parseInt(data.rank) < 5) {
 				nextQuestion = 4;
-				arrayResult = questionsList[nextQuestion].comment.split("[city]");
-				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+				arrayResult = list[nextQuestion].comment.split("[city]");
+				list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 			}	
-			callback(questionsList[nextQuestion]);
+			callback(list[nextQuestion]);
 		});
 	}
 
-	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 5) {
+	else if (parseInt(reply) >= 800 && list[questionId].questionId == 5) {
 		nextQuestion = 6;
-		callback(questionsList[nextQuestion]);
+		callback(list[nextQuestion]);
 	}
 };
 
 api.startChat = function (req, res) {
 	model
 		.create(req.body).then(function (data) {
-			let response = {
+
+			res.json({
 				userId: data._id,
 				comment: questionsList[0].comment,
 				question: questionsList[0].question,
 				questionId: 0,
 				answerFormat: questionsList[0].answerFormat,
 				delay: 500,
-			}
-			res.json(response);
+			});
 		}, function (error) {
 			console.log(error);
 			res.status(404).json(error);
