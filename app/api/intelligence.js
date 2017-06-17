@@ -32,7 +32,7 @@ function createCollections() {
 	});
 }
 
-var questionsList =
+let questionsList =
 	[
 		{
 			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
@@ -93,41 +93,41 @@ var questionsList =
 	];
 
 function generateResponse(questionId, reply, callback) {
-	let list = JSON.parse(JSON.stringify(questionList))
+
 	let nextQuestion = 0;
 
-	if (list[questionId].questionId == 0) {
+	if (questionsList[questionId].questionId == 0) {
 		nextQuestion = 1;
 
-		arrayResult = list[nextQuestion].comment.split("[name]");
-		list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+		arrayResult = questionsList[nextQuestion].comment.split("[name]");
+		questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 
-		callback(list[nextQuestion])
+		callback(questionsList[nextQuestion])
 	}
 
-	else if (reply.includes("2016") && list[questionId].questionId == 1) {
+	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
 		nextQuestion = 2;
-		callback(list[nextQuestion])
+		callback(questionsList[nextQuestion])
 	}
 
-	else if (reply < 2000 && list[questionId].questionId == 1) {
+	else if (reply < 2000 && questionsList[questionId].questionId == 1) {
 		nextQuestion = 7;
-		callback(list[nextQuestion])
+		callback(questionsList[nextQuestion])
 	}
 
-	else if (reply < 2000 && list[questionId].questionId == 7) {
+	else if (reply < 2000 && questionsList[questionId].questionId == 7) {
 		nextQuestion = 1;
-		callback(list[nextQuestion])
+		callback(questionsList[nextQuestion])
 	}
 
-	else if (reply.includes("engenharia") && list[questionId].questionId == 2) {
+	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2) {
 		nextQuestion = 3;
-		arrayResult = list[nextQuestion].question.split("[course]");
-		list[nextQuestion].question = arrayResult[0] + reply + arrayResult[1];
-		callback(list[nextQuestion])
+		arrayResult = questionsList[nextQuestion].question.split("[course]");
+		questionsList[nextQuestion].question = arrayResult[0] + reply + arrayResult[1];
+		callback(questionsList[nextQuestion])
 	}
 
-	else if (list[questionId].questionId == 3) {
+	else if (questionsList[questionId].questionId == 3) {
 		
 		lifeQuality.findOne({city: reply}, function (error, data) {
 			if (error) {
@@ -136,25 +136,85 @@ function generateResponse(questionId, reply, callback) {
 			
 			else if (parseInt(data.rank) >= 5) {
 				nextQuestion = 5;
-				arrayResult = list[nextQuestion].comment.split("[city]");
-				list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+				arrayResult = questionsList[nextQuestion].comment.split("[city]");
+				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 			}
 			else if (parseInt(data.rank) < 5) {
 				nextQuestion = 4;
-				arrayResult = list[nextQuestion].comment.split("[city]");
-				list[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+				arrayResult = questionsList[nextQuestion].comment.split("[city]");
+				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
 			}	
-			callback(list[nextQuestion]);
+			callback(questionsList[nextQuestion]);
 		});
 	}
 
-	else if (parseInt(reply) >= 800 && list[questionId].questionId == 5) {
+	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 5) {
 		nextQuestion = 6;
-		callback(list[nextQuestion]);
+		callback(questionsList[nextQuestion]);
 	}
 };
 
 api.startChat = function (req, res) {
+	let questionsList =
+	[
+		{
+			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
+			question: "opa, antes de tudo, como posso te chamar?",
+			answerFormat: "text",
+			questionId: 0,
+			delay: 500
+		},
+		{
+			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			question: "Qual ano você fez o enem pela última vez?",
+			answerFormat: "number",
+			questionId: 1,
+			delay: 500
+		},
+		{
+			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!",
+			question: "Ano passado eu queria fazer análise de robô, esse ano já não quero mais e você qual curso gostaria de fazer?",
+			answerFormat: "text",
+			questionId: 2,
+			delay: 250
+		},
+		{
+			comment: "",
+			question: "Sabia que no RS está com alta na demanda em [course]? falando nisso qual sua cidade?",
+			answerFormat: "text",
+			questionId: 3,
+			delay: 250
+		},
+		{
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] possui uma ótima qualidade vida, mas tudo se torna bem caro em relação as outras cidades do País!",
+			question: "Qual sua nota no enem?",
+			answerFormat: "text",
+			questionId: 4,
+			delay: 250
+		},
+		{
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] não possui uma boa qualidade de vida!",
+			question: "Qual sua nota no enem?",
+			answerFormat: "text",
+			questionId: 5,
+			delay: 250
+		},
+		{
+			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
+			question: "Espero ter ajudado, muito obrigado!",
+			answerFormat: "text",
+			questionId: 6,
+			delay: 250
+		},
+		{
+			comment: "Hahahaha, parece que faz muito tempo em!",
+			question: "Qual ano você fez o enem pela última vez?",
+			answerFormat: "text",
+			questionId: 7,
+			delay: 250
+		}
+	];
+
 	model
 		.create(req.body).then(function (data) {
 
