@@ -109,6 +109,7 @@ var questionsList =
 	}
 
 function generateResponse(questionId, reply, id, callback) {
+	console.log(id);
 	let response = {};
 	let nextQuestion = 0;
 
@@ -189,7 +190,7 @@ api.startChat = function (req, res) {
 };
 
 api.reply = function (req, res) {
-	createCollections();
+	
 	let collectReply =
 		{
 			userId: req.body.userId,
