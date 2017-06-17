@@ -5,16 +5,20 @@ var schema = mongoose.Schema({
 		type: String,
 		required: false
 	},
-	question: {
+  question: {
+    type: String,
+    required: false
+  },
+	reply: {
 		type: String,
 		required: false
 	},
-	answer: {
-		type: String,
-		required: false
-	},
-  questionType: {
+  questionId: {
     type: Number,
+		required: false
+  },
+  replyFormat: {
+    type: String,
 		required: false
   }
 });
