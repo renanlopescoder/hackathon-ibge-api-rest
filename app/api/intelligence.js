@@ -42,7 +42,7 @@ var questionsList =
 			delay: 500
 		},
 		{
-			comment: "Muito prazer em te conhecer caro [name], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			comment: "Muito prazer em te conhecer caro tiago, vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
 			question: "Qual ano você fez o enem pela última vez?",
 			answerFormat: "number",
 			questionId: 1,
@@ -115,11 +115,11 @@ function generateResponse(questionId, reply, id, callback) {
 
 	if (questionsList[questionId].questionId == 0) {
 		nextQuestion = 1;
-		register(id, function(data){
-			arrayResult = questionsList[nextQuestion].comment.split("[name]");
-			questionsList[nextQuestion].comment = arrayResult[0] + data.name + arrayResult[1];
+		// register(id, function(data){
+			// arrayResult = questionsList[nextQuestion].comment.split("[name]");
+			// questionsList[nextQuestion].comment = arrayResult[0] + data.name + arrayResult[1];
 			callback(questionsList[nextQuestion])
-		});
+		// });
 	}
 
 	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
