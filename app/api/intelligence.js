@@ -7,46 +7,32 @@ var collect = mongoose.model('Collect');
 var questionsArray =
 	[
 		{
-			question: ["Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar", "opa, antes de tudo, como posso te chamar?"],
+			comment: "Olá, sou o Alfred seu assistente pós ENEM e universitário! estou aqui para te ajudar",
+			question: "opa, antes de tudo, como posso te chamar?",
 			answerFormat: "text",
 			questionId: 0,
-			delay: 500
+			delay: 250
 		},
 		{
-			question: ["Muito prazer em te conhecer caro [var], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?", "Quando você fez o enem pela última vez?"],
+			comment: "Muito prazer em te conhecer caro [var], vamos identificar seu perfil, para isso, vou fazer umas perguntas básicas, ok?",
+			question: "Quando você fez o enem pela última vez?",
 			answerFormat: "number",
 			questionId: 1,
-			delay: 500
+			delay: 250
 		},
 		{
-			question: ["Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre "],
+			comment: "Ahhh! ainda lembro daquele ENEM, aquele tema da redação sobre Intolerância Religiosa, me faz refletir até hoje!", 
+			question: "Ano passado eu queria fazer análise de robô, esse ano já não quero mais e você qual curso gostaria de fazer?",
 			answerFormat: "text",
 			questionId: 2,
-			delay: 500
+			delay: 250
 		},
 		{
-			question: ["Olá, sou o Alfred como você se chama?"],
+			comment: "", 
+			question: "",
 			answerFormat: "text",
-			questionId: 3,
-			delay: 500
-		},
-		{
-			question: ["Olá, sou o Alfred como você se chama?"],
-			answerFormat: "text",
-			questionId: 4,
-			delay: 500
-		},
-		{
-			question: ["Olá, sou o Alfred como você se chama?"],
-			answerFormat: "text",
-			questionId: 5,
-			delay: 500
-		},
-		{
-			question: ["Olá, sou o Alfred como você se chama?"],
-			answerFormat: "text",
-			questionId: 6,
-			delay: 500
+			questionId: 2,
+			delay: 250
 		}
 	];
 
@@ -57,8 +43,11 @@ function generateResponse(questionId, reply) {
 
 // CASE 0
 
-		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 0 :
-			responder = questionsArray[2]
+		case reply.indexOf("engenharia") !== -1 && questionsArray[questionId].questionId == 2 :
+			response = {
+				alfred: "Muito bom, no Rio Grande do Sul tem alta demanda nessa área",
+				
+			}
 			break
 
 		case reply.indexOf("") !== -1 && questionsArray[questionId].questionId == 0:
