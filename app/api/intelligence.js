@@ -131,6 +131,7 @@ api.startChat = function (req, res) {
 		.create(req.body).then(function (data) {
 			let response = {
 				userId: data._id,
+				comment: questionsArray[0].comment,
 				question: questionsArray[0].question,
 				questionId: 0,
 				answerFormat: questionsArray[0].answerFormat,
