@@ -188,8 +188,8 @@ api.reply = function (req, res) {
 				reply: req.body.reply
 			}
 		).then(function (data) {
-			generateResponse(req.body.questionId, req.body.reply, function(data){
-				return res.json(data);
+			generateResponse(data.questionId, data.reply, function(dataCallback){
+				return res.json(dataCallback);
 			})
 		}, function (error) {
 			console.log(error);
