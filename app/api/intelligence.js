@@ -3,6 +3,34 @@ var api = {};
 
 var model = mongoose.model('User');
 var collect = mongoose.model('Collect');
+var lifeQuality = mongoose.model('LifeQuality');
+var occupation = mongoose.model('Occupation');
+
+function createCollections() {
+	model.create({}).then(function (data) {
+		res.json(data);
+	}, function (error) {
+		res.status(404).json(error);
+	});
+
+	collect.create({}).then(function (data) {
+		res.json(data);
+	}, function (error) {
+		res.status(404).json(error);
+	});
+
+	lifeQuality.create({}).then(function (data) {
+		res.json(data);
+	}, function (error) {
+		res.status(404).json(error);
+	});
+
+	occupation.create({}).then(function (data) {
+		res.json(data);
+	}, function (error) {
+		res.status(404).json(error);
+	});
+}
 
 var questionsList =
 	[
@@ -42,41 +70,71 @@ var questionsList =
 			delay: 250
 		},
 		{
-			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
-			question: "Espero ter ajudado, muito obrigado!",
+			comment: "Legal cidade bonita, tenho ouvido falar que [city] não possui uma boa qualidade de vida!",
+			question: "Qual sua nota no enem?",
 			answerFormat: "text",
 			questionId: 5,
 			delay: 250
 		},
+		{
+			comment: "Legal, vamos ver, olha só que sorte achei algumas faculdades que pode ser interessantes para seu perfil UFBA na Bahia, USP em São Paulo, UNB em Brasília",
+			question: "Espero ter ajudado, muito obrigado!",
+			answerFormat: "text",
+			questionId: 6,
+			delay: 250
+		},
 	];
 
-function generateResponse(questionId, reply) {
-	let response = {}
+function generateResponse(questionId, reply, callback) {
+	let response = {};
+	let nextQuestion = 0;
 
 	if (questionsList[questionId].questionId == 0) {
-		arrayResult = questionsList[questionId + 1].comment.split("[name]");
-		questionsList[questionId + 1].comment = arrayResult[0] + reply + arrayResult[1];
-		return questionsList[questionId + 1];
+		nextQuestion = 1;
+
+		arrayResult = questionsList[nextQuestion].comment.split("[name]");
+		questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+
+		callback(questionsList[nextQuestion])
 	}
 
 	else if (reply.includes("2016") && questionsList[questionId].questionId == 1) {
-		return questionsList[questionId + 1];
-	}
-	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2){
-		arrayResult = questionsList[questionId + 1].question.split("[course]");
-		questionsList[questionId + 1].question = arrayResult[0] + reply + arrayResult[1];
-		return questionsList[questionId + 1];
-	}
-	else if (reply.includes("brasilia") && questionsList[questionId].questionId == 3){
-		arrayResult = questionsList[questionId + 1].comment.split("[city]");
-		questionsList[questionId + 1].comment = arrayResult[0] + reply + arrayResult[1];
-		return questionsList[questionId + 1];
-	}
-	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 4){
-		return questionsList[questionId + 1];
+		nextQuestion = 2;
+		callback(questionsList[nextQuestion])
 	}
 
-	return response
+	else if (reply.includes("engenharia") && questionsList[questionId].questionId == 2) {
+		nextQuestion = 3;
+		arrayResult = questionsList[nextQuestion].question.split("[course]");
+		questionsList[nextQuestion].question = arrayResult[0] + reply + arrayResult[1];
+		callback(questionsList[nextQuestion])
+	}
+
+	else if (questionsList[questionId].questionId == 3) {
+		
+		lifeQuality.findOne({city: reply}, function (error, data) {
+			if (error) {
+				res.status(500).json(error);
+			}
+			
+			else if (parseInt(data.rank) >= 5) {
+				nextQuestion = 5;
+				arrayResult = questionsList[nextQuestion].comment.split("[city]");
+				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+			}
+			else if (parseInt(data.rank) < 5) {
+				nextQuestion = 4;
+				arrayResult = questionsList[nextQuestion].comment.split("[city]");
+				questionsList[nextQuestion].comment = arrayResult[0] + reply + arrayResult[1];
+			}	
+			callback(questionsList[nextQuestion]);
+		});
+	}
+
+	else if (parseInt(reply) >= 800 && questionsList[questionId].questionId == 5) {
+		nextQuestion = 6;
+		callback(questionsList[nextQuestion]);
+	}
 };
 
 api.startChat = function (req, res) {
@@ -98,7 +156,7 @@ api.startChat = function (req, res) {
 };
 
 api.reply = function (req, res) {
-
+	createCollections();
 	let collectReply =
 		{
 			userId: req.body.userId,
@@ -109,7 +167,9 @@ api.reply = function (req, res) {
 
 	collect
 		.create(collectReply).then(function (data) {
-			res.json(generateResponse(req.body.questionId, req.body.reply));
+			generateResponse(req.body.questionId, req.body.reply, function(data){
+				return res.json(data);
+			})
 		}, function (error) {
 			console.log(error);
 			res.status(404).json(error);
@@ -117,6 +177,15 @@ api.reply = function (req, res) {
 };
 
 api.getCollectedData = function (req, res) {
+	collect.find({}, function (error, data) {
+		if (error) {
+			res.status(500).json(error);
+		}
+		res.json(data);
+	});
+};
+
+api.getLifeQualities = function (req, res) {
 	collect.find({}, function (error, data) {
 		if (error) {
 			res.status(500).json(error);

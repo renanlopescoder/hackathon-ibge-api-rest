@@ -5,4 +5,5 @@ module.exports = function (app){
 	app.post('/startChat', api.startChat);
 	app.post('/reply', api.reply);
 	app.get('/collectedData', api.getCollectedData);
+	app.get('/lifequalities', api.getLifeQualities);
 };
